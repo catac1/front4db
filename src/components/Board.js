@@ -1,0 +1,48 @@
+import { Table } from 'antd';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+
+const Board = () => {
+
+    const [rows, setRows] = useState([]);
+
+    // 컬럼의 명칭, dataIndex는 백엔드에서 오는 키값, key는 Table을 위한 고유 키값
+    const columns = [
+        { title: '번호', dataIndex: 'no', key: 'no' },
+        { title: '제목', dataIndex: 'title', key: 'title' },
+        { title: '내용', dataIndex: 'content', key: 'content' },
+        { title: '작성자', dataIndex: 'writer', key: 'writer' },
+        { title: '조회수', dataIndex: 'hit', key: 'hit' },
+        { title: '작성일', dataIndex: 'create_at', key: 'create_at' },
+    ];
+
+    const handleData = async () => {
+        const url = `/api/board/selectlist.json`;
+        try {
+            const { data } = await axios.get(url);
+            // if (data.status === 200) {
+            setRows(data.result);
+            console.log(data.result);
+            // }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        handleData();
+    }, []);
+
+    return (
+        <div>
+            <Table columns={columns} dataSource={rows}
+                pagination={false} size='small'
+                style={{ cursor: 'pointer' }}
+                rowKey={"no"}
+            />
+        </div>
+    );
+};
+
+export default Board;
