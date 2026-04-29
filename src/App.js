@@ -1,12 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Board from './components/Board';
+import Join from './components/Join';
 
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path="/list" element={<Board />}> </Route>
+        <Route path="/join" element={<Join />}> </Route>
       </Routes>
     </div>
   );
