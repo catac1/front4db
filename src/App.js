@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Board from './components/Board';
 import Join from './components/Join';
 import Login from './components/Login';
+import Reset from './components/Reset';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <Route path="/list" element={<Board />}> </Route>
         <Route path="/join" element={<Join />}> </Route>
         <Route path="/login" element={<Login />}> </Route>
+        <Route path="/reset" element={<Reset />}> </Route>
       </Routes>
     </div>
   );
