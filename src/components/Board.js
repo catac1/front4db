@@ -11,6 +11,7 @@ const Board = () => {
     const size = searchParams.get('size') || 10;
 
     const [rows, setRows] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // 컬럼의 명칭, dataIndex는 백엔드에서 오는 키값, key는 Table을 위한 고유 키값
     const columns = [
@@ -22,7 +23,12 @@ const Board = () => {
         { title: '작성일', dataIndex: 'create_at', key: 'create_at' },
     ];
 
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay));
+    }
+
     const handleData = async () => {
+        setLoading(true);
         const url = `/api/board/selectlist.json?page=${page}&size=${size}`;
         try {
             const { data } = await axios.get(url);
@@ -30,6 +36,8 @@ const Board = () => {
             setRows(data.result);
             console.log(data.result);
             // }
+            await timeout(2000);
+            setLoading(false);
         }
         catch (err) {
             console.log(err);
@@ -43,6 +51,7 @@ const Board = () => {
     return (
         <div>
             <Table columns={columns} dataSource={rows}
+                loading={loading}
                 pagination={false} size='small'
                 style={{ cursor: 'pointer' }}
                 rowKey={"no"}
