@@ -1,8 +1,14 @@
 import { Table } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const Board = () => {
+
+    const [searchParams] = useSearchParams();
+
+    const page = searchParams.get('page') || 1;
+    const size = searchParams.get('size') || 10;
 
     const [rows, setRows] = useState([]);
 
@@ -17,7 +23,7 @@ const Board = () => {
     ];
 
     const handleData = async () => {
-        const url = `/api/board/selectlist.json`;
+        const url = `/api/board/selectlist.json?page=${page}&size=${size}`;
         try {
             const { data } = await axios.get(url);
             // if (data.status === 200) {
